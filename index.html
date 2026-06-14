@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>원스트라이크원볼 숫자야구</title>
+    <link rel="stylesheet" href="styles.css?v=scoreboard-toy" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="play-layout" aria-label="원스트라이크원볼 게임 화면">
+        <section class="play-panel" aria-label="왼쪽 숫자 선택 영역">
+          <header class="compact-hero" aria-labelledby="pageTitle">
+            <div class="title-stack">
+              <p class="eyebrow">우리 집 로컬 게임</p>
+              <h1 id="pageTitle">⚾ 원스트라이크원볼</h1>
+            </div>
+            <p id="heroText" class="hero-text">
+              컴퓨터가 고른 <strong>0~9 중 서로 다른 숫자 3개</strong>를 맞혀보자!
+              처음이면 초급부터 시작해도 좋아.
+            </p>
+          </header>
+
+          <div class="score-row">
+            <div class="score-box">
+              <span class="score-label">도전</span>
+              <strong id="attemptCount">0</strong>
+            </div>
+            <div class="score-box">
+              <span class="score-label">목표</span>
+              <strong id="goalText">3S</strong>
+              <span id="goalHint" class="goal-hint">숫자 3개 모두 맞히기</span>
+            </div>
+            <div class="score-box score-box-highlight">
+              <span class="score-label">점수</span>
+              <strong id="scoreText">0</strong>
+            </div>
+            <div class="score-box score-box-highlight">
+              <span class="score-label">연속 홈런</span>
+              <strong id="streakText">0</strong>
+            </div>
+          </div>
+
+          <div
+            id="difficultySelector"
+            class="difficulty-selector"
+            role="group"
+            aria-label="난이도 선택"
+          >
+            <button class="difficulty-button active" type="button" data-difficulty="beginner" aria-pressed="true">초급</button>
+            <button class="difficulty-button" type="button" data-difficulty="intermediate" aria-pressed="false">중급</button>
+            <button class="difficulty-button" type="button" data-difficulty="advanced" aria-pressed="false">상급</button>
+            <button class="difficulty-button" type="button" data-difficulty="expert" aria-pressed="false">최상급</button>
+          </div>
+          <p class="difficulty-help">난이도를 바꾸면 바로 새 게임으로 다시 시작해.</p>
+
+          <section class="gamification-panel" aria-label="게임 보상과 진행도">
+            <div class="reward-row">
+              <span id="badgeText" class="badge-pill">🏅 새싹 타자 배지 도전 중</span>
+              <span id="progressText" class="progress-text">진행도 0/3</span>
+            </div>
+            <div class="progress-track" aria-hidden="true">
+              <div id="progressFill" class="progress-fill" style="width: 0%"></div>
+            </div>
+          </section>
+
+          <form id="guessForm" class="guess-form" novalidate>
+            <label for="guessInput">내가 고른 숫자</label>
+            <div class="input-row">
+              <input
+                id="guessInput"
+                name="guess"
+                type="text"
+                inputmode="numeric"
+                pattern="[0-9]{3}"
+                maxlength="3"
+                autocomplete="off"
+                placeholder="숫자 3개 입력"
+                aria-describedby="ruleText padHelp progressText"
+              />
+              <button class="primary-button" type="submit">던지기!</button>
+            </div>
+          </form>
+
+          <p id="padHelp" class="pad-help">초급은 0부터 9까지 숫자를 써!</p>
+          <div class="number-pad" aria-label="숫자 버튼">
+            <button type="button" data-digit="1">1</button>
+            <button type="button" data-digit="2">2</button>
+            <button type="button" data-digit="3">3</button>
+            <button type="button" data-digit="4">4</button>
+            <button type="button" data-digit="5">5</button>
+            <button type="button" data-digit="6">6</button>
+            <button type="button" data-digit="7">7</button>
+            <button type="button" data-digit="8">8</button>
+            <button type="button" data-digit="9">9</button>
+            <button type="button" data-digit="0">0</button>
+            <button type="button" data-action="delete">지우기</button>
+            <button type="button" data-action="clear">모두 지우기</button>
+          </div>
+
+          <div class="actions">
+            <button id="newGameButton" type="button">새 게임</button>
+          </div>
+        </section>
+
+        <aside class="history-panel" aria-label="오른쪽 기록 영역" aria-labelledby="historyTitle">
+          <div class="history-header">
+            <div>
+              <p class="panel-kicker">오른쪽 기록판</p>
+              <h2 id="historyTitle">기록</h2>
+            </div>
+            <span class="history-tip">최근 시도가 아래에 쌓여요 · 2열 20칸</span>
+          </div>
+
+          <details class="rules-drawer">
+            <summary>규칙 보기</summary>
+            <div class="rules-body">
+              <p id="ruleText">
+                0~9 숫자 중 <strong>서로 다른 3개</strong>를 입력해. 같은 숫자는 한 번만 써.
+              </p>
+              <ul>
+                <li><strong>스트라이크</strong>: 숫자와 자리가 모두 맞음</li>
+                <li><strong>볼</strong>: 숫자는 맞지만 자리가 다름</li>
+                <li><strong>아웃</strong>: 맞는 숫자가 하나도 없음</li>
+                <li><strong>보상</strong>: 빨리 맞힐수록 별과 점수를 더 많이 받아!</li>
+              </ul>
+              <h3>난이도 안내</h3>
+              <ul class="difficulty-rules">
+                <li><strong>초급</strong>: 0~9 숫자 3개 맞히기</li>
+                <li><strong>중급</strong>: 0~9 숫자 4개 맞히기</li>
+                <li><strong>상급</strong>: 0~9 숫자 5개 맞히기</li>
+                <li><strong>최상급</strong>: 0~9 숫자 6개 맞히기</li>
+              </ul>
+            </div>
+          </details>
+
+          <ol id="historyList" class="history-list"></ol>
+        </aside>
+      </section>
+    </main>
+    <div id="celebration" class="celebration" aria-hidden="true"></div>
+
+    <script src="src/game.js?v=scoreboard-toy"></script>
+    <script src="src/app.js?v=scoreboard-toy"></script>
+  </body>
+</html>
