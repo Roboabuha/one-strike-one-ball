@@ -12,6 +12,10 @@
   --blue-soft: #eaf4ff;
   --orange-soft: #fff1dc;
   --green-soft: #e9fbe9;
+  --level-blue: #2f80d8;
+  --level-yellow: #f5c84b;
+  --level-red: #e65050;
+  --level-black: #171d29;
   --scoreboard: #111827;
   --line: rgba(31, 41, 55, 0.1);
   --panel-border: rgba(255, 255, 255, 0.68);
@@ -245,28 +249,113 @@ h1 {
 }
 
 .difficulty-button {
+  --level-color: var(--accent);
+  --level-top: #ffffff;
+  --level-bottom: #f2f6fb;
+  --level-border: #dfe7f2;
+  --level-text: var(--ink);
+  --level-active-top: #f8fbff;
+  --level-active-bottom: #dcecff;
+  --level-active-border: var(--accent);
+  --level-active-text: var(--ink);
+  position: relative;
+  overflow: hidden;
   min-height: 42px;
   padding: 6px 8px;
-  border: 2px solid #dfe7f2;
+  border: 2px solid var(--level-border);
   border-radius: 14px;
-  background: linear-gradient(180deg, #ffffff, #f2f6fb);
-  color: var(--ink);
+  background: linear-gradient(180deg, var(--level-top), var(--level-bottom));
+  color: var(--level-text);
   text-align: center;
   font-size: 0.98rem;
   font-weight: 950;
-  box-shadow: inset 0 -4px 0 rgba(31, 41, 55, 0.06), 0 6px 12px rgba(15, 23, 42, 0.06);
-  transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+  box-shadow:
+    inset 0 -4px 0 rgba(31, 41, 55, 0.06),
+    0 6px 12px rgba(15, 23, 42, 0.06);
+  transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+
+.difficulty-button::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  content: "";
+  background: var(--level-color);
+}
+
+.difficulty-button[data-difficulty="beginner"] {
+  --level-color: var(--level-blue);
+  --level-top: #f8fcff;
+  --level-bottom: #dceeff;
+  --level-border: rgba(47, 128, 216, 0.28);
+  --level-text: #155493;
+  --level-active-top: #50a4f2;
+  --level-active-bottom: #226fbe;
+  --level-active-border: #155493;
+  --level-active-text: #ffffff;
+}
+
+.difficulty-button[data-difficulty="intermediate"] {
+  --level-color: var(--level-yellow);
+  --level-top: #fffdf2;
+  --level-bottom: #ffe89a;
+  --level-border: rgba(211, 157, 24, 0.34);
+  --level-text: #694700;
+  --level-active-top: #ffd96b;
+  --level-active-bottom: #f0b91f;
+  --level-active-border: #b98200;
+  --level-active-text: #3b2900;
+}
+
+.difficulty-button[data-difficulty="advanced"] {
+  --level-color: var(--level-red);
+  --level-top: #fff8f6;
+  --level-bottom: #ffdada;
+  --level-border: rgba(230, 80, 80, 0.3);
+  --level-text: #922525;
+  --level-active-top: #ff746b;
+  --level-active-bottom: #d83c3c;
+  --level-active-border: #a82222;
+  --level-active-text: #ffffff;
+}
+
+.difficulty-button[data-difficulty="expert"] {
+  --level-color: var(--level-black);
+  --level-top: #f9fafb;
+  --level-bottom: #dce1ea;
+  --level-border: rgba(23, 29, 41, 0.24);
+  --level-text: #171d29;
+  --level-active-top: #313b4f;
+  --level-active-bottom: #0f1522;
+  --level-active-border: #090d16;
+  --level-active-text: #ffffff;
 }
 
 .difficulty-button:hover {
   transform: translateY(-1px);
-  border-color: rgba(37, 99, 235, 0.45);
+  border-color: var(--level-active-border);
+  box-shadow:
+    inset 0 -4px 0 rgba(31, 41, 55, 0.08),
+    0 8px 14px color-mix(in srgb, var(--level-color) 18%, transparent);
 }
 
 .difficulty-button.active {
-  border-color: var(--accent);
-  background: linear-gradient(180deg, #f8fbff, #dcecff);
-  box-shadow: inset 0 -4px 0 rgba(37, 99, 235, 0.12), 0 10px 18px rgba(37, 99, 235, 0.16);
+  border-color: var(--level-active-border);
+  background: linear-gradient(180deg, var(--level-active-top), var(--level-active-bottom));
+  color: var(--level-active-text);
+  box-shadow:
+    inset 0 -5px 0 rgba(0, 0, 0, 0.14),
+    0 10px 18px color-mix(in srgb, var(--level-color) 25%, transparent);
+}
+
+.difficulty-button.active::before {
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.difficulty-button[data-difficulty="expert"].active::before {
+  background: var(--level-yellow);
 }
 
 .difficulty-help {

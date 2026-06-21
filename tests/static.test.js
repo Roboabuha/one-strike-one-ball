@@ -19,7 +19,7 @@ test('index.html wires the game UI, stylesheet, and scripts', () => {
   assert.match(html, /id="historyList"/);
   assert.match(html, /src="src\/game\.js\?v=scoreboard-toy"/);
   assert.match(html, /src="src\/app\.js\?v=scoreboard-toy"/);
-  assert.match(html, /href="styles\.css\?v=scoreboard-toy"/);
+  assert.match(html, /href="styles\.css\?v=level-colors"/);
 });
 
 test('index.html uses a no-scroll two-panel desktop layout with play on the left and history on the right', () => {
